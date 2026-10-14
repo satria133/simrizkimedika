@@ -94,7 +94,8 @@ if [ "$SHARED_HOST" = yes ]; then
     ln -sf "$SITE" /etc/nginx/sites-enabled/
     nginx -t
     systemctl reload nginx
-    certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos -m "$ACME_EMAIL" --redirect
+    if [ -n "${ACME_EMAIL:-}" ]; then EMAIL_ARG=(-m "$ACME_EMAIL"); else EMAIL_ARG=(); fi   # kosong = pakai akun certbot yang sudah ada
+    certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos "${EMAIL_ARG[@]}" --redirect
   else
     echo "   site $DOMAIN sudah ada, dilewati"
   fi
