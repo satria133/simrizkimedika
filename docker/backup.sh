@@ -5,7 +5,8 @@ set -euo pipefail
 cd "$(dirname "$0")"
 ENV_FILE=.env.production
 set -a; . "./$ENV_FILE"; set +a
-COMPOSE=(docker compose -p mlite -f docker-compose.yaml -f docker-compose.prod.yaml --env-file "$ENV_FILE")
+if [ "${SHARED_HOST:-no}" = yes ]; then OVERRIDE=docker-compose.shared.yaml; else OVERRIDE=docker-compose.prod.yaml; fi
+COMPOSE=(docker compose -p mlite -f docker-compose.yaml -f "$OVERRIDE" --env-file "$ENV_FILE")
 
 DIR=/var/backups/mlite
 mkdir -p "$DIR"/{harian,mingguan,bulanan}

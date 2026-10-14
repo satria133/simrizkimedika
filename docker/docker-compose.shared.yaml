@@ -1,0 +1,37 @@
+# Override untuk VPS BERSAMA (sudah ada nginx host + certbot di port 80/443 dan aplikasi lain).
+#   docker compose -p mlite -f docker-compose.yaml -f docker-compose.shared.yaml --env-file .env.production up -d
+#
+# - TANPA Caddy: HTTPS ditangani nginx host + certbot (lihat host-nginx.conf.template)
+# - nginx container hanya terbuka di 127.0.0.1:${APP_LOCAL_PORT} (tidak ke internet)
+# - batas memori per container supaya tidak mengganggu aplikasi lain di VPS
+# - MySQL kecil (my.small.cnf), tidak di-publish
+
+services:
+  nginx:
+    restart: always
+    ports:
+      - "127.0.0.1:${APP_LOCAL_PORT:-8200}:80"
+    volumes:
+      - ./nginx/prod.conf:/etc/nginx/conf.d/default.conf:ro
+    mem_limit: 64m
+
+  php:
+    restart: always
+    environment:
+      - APPURL=https://${DOMAIN}/uploads
+      - DEVMODE=false
+      - DEV_MODE=false
+      - MULTIAPP=false
+    mem_limit: 384m
+    command: >-
+      sh -c "composer install --no-dev --optimize-autoloader --no-interaction &&
+      mkdir -p /var/www/html/backups /var/www/html/uploads /var/www/html/systems/data /var/www/html/tmp /var/www/html/admin/tmp &&
+      chown -R www-data:www-data /var/www/html/backups /var/www/html/uploads /var/www/html/systems/data /var/www/html/tmp /var/www/html/admin/tmp &&
+      chmod -R 775 /var/www/html/backups /var/www/html/uploads /var/www/html/systems/data /var/www/html/tmp /var/www/html/admin/tmp &&
+      php-fpm"
+
+  mysql:
+    mem_limit: 640m
+    volumes:
+      - ./my.small.cnf:/etc/mysql/conf.d/rizkimedika.cnf:ro
+      - ../docs/rizkimedika/setup.sql:/docker-entrypoint-initdb.d/zz-rizkimedika.sql:ro

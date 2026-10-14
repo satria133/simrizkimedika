@@ -8,7 +8,8 @@ cd "$(dirname "$0")"
 FILE=${1:?"pakai: restore.sh <file.tar.gz.gpg>"}
 ENV_FILE=.env.production
 set -a; . "./$ENV_FILE"; set +a
-COMPOSE=(docker compose -p mlite -f docker-compose.yaml -f docker-compose.prod.yaml --env-file "$ENV_FILE")
+if [ "${SHARED_HOST:-no}" = yes ]; then OVERRIDE=docker-compose.shared.yaml; else OVERRIDE=docker-compose.prod.yaml; fi
+COMPOSE=(docker compose -p mlite -f docker-compose.yaml -f "$OVERRIDE" --env-file "$ENV_FILE")
 
 read -r -p "Timpa database '${DB_DATABASE}' dan uploads dengan $(basename "$FILE")? ketik YA: " OK
 [ "$OK" = "YA" ] || { echo "dibatalkan"; exit 1; }

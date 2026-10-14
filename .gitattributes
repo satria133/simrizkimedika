@@ -2,3 +2,6 @@
 docker/Caddyfile text eol=lf
 docker/my.cnf text eol=lf
 docker/nginx/*.conf text eol=lf
+docker/*.cnf text eol=lf
+docker/*.template text eol=lf
+docker/*.yaml text eol=lf
