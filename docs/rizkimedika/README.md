@@ -48,7 +48,7 @@ backup.sh (cron 02:00) ─▶ /var/backups/mlite (terenkripsi) ─▶ object sto
 ### Langkah
 ```bash
 # di VPS (sebagai root)
-git clone -b rizki-medika-ui <repo-privat-klinik> /opt/mlite
+git clone https://github.com/satria133/simrizkimedika.git /opt/mlite
 cd /opt/mlite/docker
 cp .env.production.example .env.production
 nano .env.production          # isi DOMAIN, email, password DB, remote & passphrase backup
