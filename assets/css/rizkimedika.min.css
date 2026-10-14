@@ -1,0 +1,396 @@
+/*!
+ * Tema "Rizki Medika" untuk mLITE: gaya CARE (ohcnetwork/care_fe, MIT) dengan warna papan nama Rizki Medika
+ * Basis Bootstrap 3 tetap dimuat, lalu di-override dengan token dan komponen bergaya CARE.
+ * Pilih di Pengaturan, Tema Admin, "Rizki Medika (CARE)".
+ */
+@import url("bootstrap.min.css");
+@import url("../fonts/figtree/figtree.css");
+
+/* ============================================================
+   1. TOKENS
+   ============================================================ */
+:root {
+  /* Biru papan nama Rizki Medika */
+  --rm-primary-50: #eef3ff;
+  --rm-primary-100: #dce6fd;
+  --rm-primary-200: #bfd1fb;
+  --rm-primary-300: #92b2f7;
+  --rm-primary-400: #5f89f0;
+  --rm-primary-500: #3a63e0;
+  --rm-primary-600: #2849c4;
+  --rm-primary-700: #213c9f; /* aksi utama, setara biru papan */
+  --rm-primary-800: #1f357f;
+  --rm-primary-900: #1c2f66;
+
+  /* Merah pita papan nama, dipakai untuk aksen dan bahaya */
+  --rm-accent-50: #fef2f2;
+  --rm-accent-100: #fee2e2;
+  --rm-accent-300: #fca5a5;
+  --rm-accent-500: #e3262f;
+  --rm-accent-600: #c81e27;
+  --rm-accent-700: #a51b22;
+  --rm-accent-900: #7f1d1d;
+
+  /* Netral (Tailwind gray, sama dengan CARE) */
+  --rm-gray-50: #f9fafb;
+  --rm-gray-100: #f3f4f6;
+  --rm-gray-200: #e5e7eb;
+  --rm-gray-300: #d1d5db;
+  --rm-gray-400: #9ca3af;
+  --rm-gray-500: #6b7280;
+  --rm-gray-600: #4b5563;
+  --rm-gray-700: #374151;
+  --rm-gray-800: #1f2937;
+  --rm-gray-900: #111827;
+  --rm-gray-950: #030712;
+  --rm-text: #453c52; /* secondary-900 CARE */
+
+  /* Semantik */
+  --rm-success-100: #dcfce7; --rm-success-300: #86efac; --rm-success-700: #15803d; --rm-success-900: #14532d;
+  --rm-warning-100: #fef3c7; --rm-warning-300: #fcd34d; --rm-warning-700: #b45309; --rm-warning-900: #78350f;
+  --rm-info-100: #e0f2fe;    --rm-info-300: #7dd3fc;    --rm-info-700: #0369a1;    --rm-info-900: #0c4a6e;
+  --rm-alert-100: #ede9fe;   --rm-alert-300: #c4b5fd;   --rm-alert-900: #4c1d95;
+
+  --rm-sidebar-bg: hsl(220 14.3% 95.9%);
+  --rm-radius-sm: 4px;
+  --rm-radius: 6px;
+  --rm-radius-lg: 8px;
+  --rm-radius-xl: 12px;
+  --rm-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --rm-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --rm-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --rm-font: "Figtree", -apple-system, "Segoe UI", Roboto, sans-serif;
+  --rm-sidebar-w: 16rem;
+}
+
+/* ============================================================
+   2. BASE
+   ============================================================ */
+html { font-size: 14px; }
+body {
+  font-family: var(--rm-font);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--rm-text);
+  background: var(--rm-sidebar-bg);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--rm-font);
+  font-weight: 700;
+  color: var(--rm-gray-950);
+  letter-spacing: -0.01em;
+}
+a { color: var(--rm-primary-700); }
+a:hover, a:focus { color: var(--rm-primary-800); text-decoration: none; }
+hr { border-top-color: var(--rm-gray-200); }
+.text-primary { color: var(--rm-primary-700) !important; }
+.text-success { color: var(--rm-success-700) !important; }
+.text-warning { color: var(--rm-warning-700) !important; }
+.text-danger { color: var(--rm-accent-600) !important; }
+.text-info { color: var(--rm-info-700) !important; }
+.text-muted { color: var(--rm-gray-500) !important; }
+.bg-primary { background-color: var(--rm-primary-700) !important; color: #fff; }
+::selection { background: var(--rm-primary-100); color: var(--rm-primary-900); }
+
+/* ============================================================
+   3. BUTTONS: varian CARE (primary, outline, secondary, ghost, destructive)
+   ============================================================ */
+.btn {
+  font-family: var(--rm-font);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: var(--rm-radius);
+  padding: 7px 14px;
+  line-height: 20px;
+  box-shadow: var(--rm-shadow-xs);
+  transition: background-color .15s, border-color .15s, color .15s, box-shadow .15s;
+}
+.btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--rm-primary-200);
+}
+.btn:active, .btn.active { box-shadow: none; }
+.btn-xs { padding: 2px 8px; font-size: 12px; line-height: 18px; }
+.btn-sm { padding: 5px 12px; font-size: 12px; line-height: 20px; }
+.btn-lg { padding: 9px 16px; font-size: 15px; }
+
+.btn-primary { background: var(--rm-primary-700); border-color: var(--rm-primary-700); color: #fff; }
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active,
+.open > .dropdown-toggle.btn-primary { background: var(--rm-primary-800); border-color: var(--rm-primary-800); color: #fff; }
+
+.btn-default { background: #fff; border-color: var(--rm-gray-300); color: var(--rm-gray-900); }
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active,
+.open > .dropdown-toggle.btn-default { background: var(--rm-gray-100); border-color: var(--rm-gray-300); color: var(--rm-gray-900); }
+
+.btn-success { background: var(--rm-success-700); border-color: var(--rm-success-700); color: #fff; }
+.btn-success:hover, .btn-success:focus, .btn-success:active { background: var(--rm-success-900); border-color: var(--rm-success-900); color: #fff; }
+
+.btn-danger { background: var(--rm-accent-500); border-color: var(--rm-accent-500); color: #fff; }
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active { background: var(--rm-accent-600); border-color: var(--rm-accent-600); color: #fff; }
+
+.btn-warning { background: var(--rm-warning-100); border-color: var(--rm-warning-300); color: var(--rm-warning-900); }
+.btn-warning:hover, .btn-warning:focus, .btn-warning:active { background: #fde68a; border-color: var(--rm-warning-300); color: var(--rm-warning-900); }
+
+.btn-info { background: var(--rm-primary-100); border-color: var(--rm-primary-200); color: var(--rm-primary-900); }
+.btn-info:hover, .btn-info:focus, .btn-info:active { background: var(--rm-primary-200); border-color: var(--rm-primary-300); color: var(--rm-primary-900); }
+
+.btn-link { box-shadow: none; color: var(--rm-primary-700); font-weight: 500; }
+.btn-link:hover, .btn-link:focus { color: var(--rm-primary-800); text-decoration: underline; box-shadow: none; }
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn { opacity: .5; box-shadow: none; }
+
+.btn-group > .btn { box-shadow: none; }
+.btn-group { box-shadow: var(--rm-shadow-xs); border-radius: var(--rm-radius); }
+
+/* ============================================================
+   4. FORMS
+   ============================================================ */
+label, .control-label { font-weight: 500; color: var(--rm-gray-700); font-size: 13px; margin-bottom: 4px; }
+.form-control {
+  height: 36px;
+  font-family: var(--rm-font);
+  font-size: 14px;
+  color: var(--rm-gray-950);
+  background: #fff;
+  border: 1px solid var(--rm-gray-300);
+  border-radius: var(--rm-radius);
+  box-shadow: var(--rm-shadow-xs);
+  padding: 7px 12px;
+  transition: border-color .3s, box-shadow .3s;
+}
+.form-control::placeholder { color: var(--rm-gray-500); }
+.form-control:focus {
+  border-color: var(--rm-primary-500);
+  box-shadow: 0 0 0 3px var(--rm-primary-100);
+  outline: none;
+}
+textarea.form-control { height: auto; min-height: 72px; }
+select.form-control { padding-right: 28px; }
+.input-sm, .form-group-sm .form-control { height: 32px; font-size: 13px; border-radius: var(--rm-radius); }
+.input-lg { height: 40px; font-size: 15px; border-radius: var(--rm-radius); }
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+  background: var(--rm-gray-50); color: var(--rm-gray-600); cursor: not-allowed;
+}
+.input-group-addon {
+  background: var(--rm-gray-50);
+  border-color: var(--rm-gray-300);
+  color: var(--rm-gray-500);
+  border-radius: var(--rm-radius);
+  font-size: 14px;
+}
+.input-group .form-control { box-shadow: none; }
+.input-group { box-shadow: var(--rm-shadow-xs); border-radius: var(--rm-radius); }
+.input-group-btn .btn { box-shadow: none; }
+.has-error .form-control { border-color: var(--rm-accent-500); box-shadow: 0 0 0 3px var(--rm-accent-100); }
+.has-error .help-block, .has-error .control-label { color: var(--rm-accent-600); }
+.has-success .form-control { border-color: var(--rm-success-700); }
+.help-block { color: var(--rm-gray-500); font-size: 12px; }
+.form-group { margin-bottom: 14px; }
+
+/* ============================================================
+   5. CARD (panel Bootstrap ditampilkan sebagai Card CARE)
+   ============================================================ */
+.panel {
+  border: 1px solid var(--rm-gray-200);
+  border-radius: var(--rm-radius-xl);
+  box-shadow: var(--rm-shadow-sm);
+  background: #fff;
+  margin-bottom: 16px;
+}
+.panel > .panel-heading {
+  background: #fff !important;
+  color: var(--rm-gray-950) !important;
+  border-bottom: 1px solid var(--rm-gray-200);
+  border-radius: var(--rm-radius-xl) var(--rm-radius-xl) 0 0;
+  padding: 14px 16px;
+  font-weight: 600;
+}
+.panel-title, h3.panel-title { font-size: 15px; font-weight: 600; color: var(--rm-gray-950); letter-spacing: -0.01em; }
+.panel-body { padding: 16px; }
+.panel-footer {
+  background: var(--rm-gray-50);
+  border-top: 1px solid var(--rm-gray-200);
+  border-radius: 0 0 var(--rm-radius-xl) var(--rm-radius-xl);
+  padding: 12px 16px;
+}
+.panel-primary > .panel-heading { box-shadow: inset 3px 0 0 var(--rm-primary-700); }
+.panel-danger > .panel-heading { box-shadow: inset 3px 0 0 var(--rm-accent-500); }
+.panel-warning > .panel-heading { box-shadow: inset 3px 0 0 var(--rm-warning-700); }
+.panel-success > .panel-heading { box-shadow: inset 3px 0 0 var(--rm-success-700); }
+.panel-info > .panel-heading { box-shadow: inset 3px 0 0 var(--rm-info-700); }
+.panel-primary, .panel-danger, .panel-warning, .panel-success, .panel-info { border-color: var(--rm-gray-200); }
+.panel > .table, .panel > .table-responsive > .table { margin-bottom: 0; }
+.panel > .table-responsive:last-child > .table:last-child,
+.panel > .table:last-child { border-radius: 0 0 var(--rm-radius-xl) var(--rm-radius-xl); }
+.well {
+  background: var(--rm-gray-50);
+  border: 1px dashed var(--rm-gray-300);
+  border-radius: var(--rm-radius-xl);
+  box-shadow: none;
+}
+
+/* ============================================================
+   6. TABLE
+   ============================================================ */
+.table { font-size: 14px; color: var(--rm-gray-900); margin-bottom: 16px; }
+.table > thead > tr > th {
+  font-weight: 500;
+  color: var(--rm-gray-950);
+  background: var(--rm-gray-50);
+  border-bottom: 1px solid var(--rm-gray-200) !important;
+  white-space: nowrap;
+  padding: 10px 8px;
+  font-size: 13px;
+}
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td {
+  padding: 8px;
+  vertical-align: middle;
+  border-top: 1px solid var(--rm-gray-200);
+}
+.table-hover > tbody > tr:hover { background: rgb(243 244 246 / .6); }
+.table-striped > tbody > tr:nth-of-type(odd) { background: rgb(249 250 251 / .8); }
+.table-bordered, .table-bordered > thead > tr > th, .table-bordered > tbody > tr > td { border-color: var(--rm-gray-200); }
+.table > tbody > tr.active > td { background: var(--rm-primary-50); }
+.table > tbody > tr.danger > td { background: var(--rm-accent-50); }
+.table > tbody > tr.warning > td { background: #fffbeb; }
+.table > tbody > tr.success > td { background: #f0fdf4; }
+.table-responsive { border: 0; }
+
+/* DataTables */
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+  border: 1px solid var(--rm-gray-300); border-radius: var(--rm-radius); height: 32px; padding: 4px 10px;
+}
+.dataTables_wrapper .dataTables_info { color: var(--rm-gray-500); font-size: 13px; }
+
+/* ============================================================
+   7. BADGE / LABEL: pola CARE (border-300, bg-100, text-900)
+   ============================================================ */
+.label, .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--rm-font);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  padding: 1px 8px;
+  border-radius: var(--rm-radius);
+  border: 1px solid var(--rm-gray-300);
+  background: var(--rm-gray-100);
+  color: var(--rm-gray-900);
+  text-shadow: none;
+}
+.label-default { background: var(--rm-gray-100); border-color: var(--rm-gray-300); color: var(--rm-gray-900); }
+.label-primary, .badge-primary { background: var(--rm-primary-100); border-color: var(--rm-primary-300); color: var(--rm-primary-900); }
+.label-success, .badge-success { background: var(--rm-success-100); border-color: var(--rm-success-300); color: var(--rm-success-900); }
+.label-info, .badge-info { background: var(--rm-info-100); border-color: var(--rm-info-300); color: var(--rm-info-900); }
+.label-warning, .badge-warning { background: var(--rm-warning-100); border-color: var(--rm-warning-300); color: var(--rm-warning-900); }
+.label-danger, .badge-danger { background: var(--rm-accent-100); border-color: var(--rm-accent-300); color: var(--rm-accent-900); }
+.btn .badge { border: 0; background: rgb(255 255 255 / .25); color: inherit; }
+
+/* ============================================================
+   8. ALERT, mengikuti Callout CARE
+   ============================================================ */
+.alert {
+  border-radius: var(--rm-radius);
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid;
+}
+.alert-success { background: #f0fdf4; border-color: var(--rm-success-300); color: var(--rm-success-900); }
+.alert-info { background: var(--rm-primary-50); border-color: var(--rm-primary-200); color: var(--rm-primary-800); }
+.alert-warning { background: #fffbeb; border-color: var(--rm-warning-300); color: var(--rm-warning-700); }
+.alert-danger, .alert-failure { background: var(--rm-accent-50); border-color: var(--rm-accent-300); color: var(--rm-accent-700); }
+
+/* ============================================================
+   9. NAV TABS / PILLS: gaya tab CARE (garis bawah)
+   ============================================================ */
+.nav-tabs { border-bottom: 1px solid var(--rm-gray-200); }
+.nav-tabs > li > a {
+  border: 0 !important;
+  border-bottom: 2px solid transparent !important;
+  border-radius: 0;
+  color: var(--rm-gray-500);
+  font-weight: 500;
+  padding: 10px 14px;
+  margin-right: 2px;
+  background: transparent !important;
+}
+.nav-tabs > li > a:hover { color: var(--rm-gray-900); }
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  color: var(--rm-primary-700);
+  border-bottom-color: var(--rm-primary-700) !important;
+  font-weight: 600;
+}
+/* style.css mLITE memosisikan tab di kanan bawah panel-heading; posisinya dipertahankan, hanya tampilannya diubah */
+.panel-heading .nav-tabs { border-bottom: 0; }
+.panel-heading .nav-tabs > li > a { padding: 6px 12px 12px; }
+.panel-heading .nav-tabs > li.active > a { background: transparent !important; color: var(--rm-primary-700); }
+.nav-pills > li > a { border-radius: var(--rm-radius); color: var(--rm-gray-700); font-weight: 500; }
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+  background: var(--rm-primary-700); color: #fff;
+}
+
+/* ============================================================
+   10. DROPDOWN, MODAL, POPOVER, TOOLTIP
+   ============================================================ */
+.dropdown-menu {
+  border: 1px solid var(--rm-gray-200);
+  border-radius: var(--rm-radius-lg);
+  box-shadow: var(--rm-shadow-lg);
+  padding: 4px;
+  font-size: 14px;
+}
+.dropdown-menu > li > a { border-radius: var(--rm-radius-sm); padding: 6px 10px; color: var(--rm-gray-900); }
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus { background: var(--rm-gray-100); color: var(--rm-gray-950); }
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover { background: var(--rm-primary-50); color: var(--rm-primary-800); }
+.dropdown-menu .divider { background: var(--rm-gray-200); margin: 4px 0; }
+
+.modal-backdrop.in { opacity: .45; }
+.modal-content {
+  border: 1px solid var(--rm-gray-200);
+  border-radius: var(--rm-radius-xl);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / .25);
+}
+.modal-header { border-bottom: 1px solid var(--rm-gray-200); padding: 16px 20px; }
+.modal-title { font-size: 17px; font-weight: 600; }
+.modal-body { padding: 20px; }
+.modal-footer { border-top: 1px solid var(--rm-gray-200); background: var(--rm-gray-50); border-radius: 0 0 var(--rm-radius-xl) var(--rm-radius-xl); padding: 12px 20px; }
+.close { opacity: .5; text-shadow: none; font-weight: 400; }
+
+.tooltip-inner { background: var(--rm-gray-900); border-radius: var(--rm-radius); font-size: 12px; padding: 5px 9px; }
+.tooltip.top .tooltip-arrow { border-top-color: var(--rm-gray-900); }
+.tooltip.bottom .tooltip-arrow { border-bottom-color: var(--rm-gray-900); }
+.popover { border-color: var(--rm-gray-200); border-radius: var(--rm-radius-lg); box-shadow: var(--rm-shadow-lg); font-family: var(--rm-font); }
+
+/* ============================================================
+   11. PAGINATION, LIST GROUP, PROGRESS, BREADCRUMB
+   ============================================================ */
+.pagination > li > a, .pagination > li > span {
+  color: var(--rm-gray-700); border-color: var(--rm-gray-200); margin-left: 4px; border-radius: var(--rm-radius) !important;
+  min-width: 34px; text-align: center;
+}
+.pagination > li > a:hover { background: var(--rm-gray-100); color: var(--rm-gray-950); }
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > span {
+  background: var(--rm-primary-700); border-color: var(--rm-primary-700); color: #fff;
+}
+.list-group-item { border-color: var(--rm-gray-200); }
+.list-group-item:first-child { border-radius: var(--rm-radius-lg) var(--rm-radius-lg) 0 0; }
+.list-group-item:last-child { border-radius: 0 0 var(--rm-radius-lg) var(--rm-radius-lg); }
+.list-group-item.active, .list-group-item.active:hover { background: var(--rm-primary-50); border-color: var(--rm-primary-200); color: var(--rm-primary-900); }
+.progress { background: var(--rm-gray-100); border-radius: 999px; box-shadow: none; height: 8px; }
+.progress-bar { background: var(--rm-primary-600); box-shadow: none; }
+.breadcrumb { background: transparent; padding: 0; margin-bottom: 8px; font-size: 13px; }
+.breadcrumb > li + li:before { color: var(--rm-gray-400); content: "/\00a0"; }
+.breadcrumb > .active { color: var(--rm-gray-500); }
+
+/* Selectator (dropdown custom mLITE) */
+.selectator_element { border: 1px solid var(--rm-gray-300) !important; border-radius: var(--rm-radius) !important; box-shadow: var(--rm-shadow-xs); min-height: 36px; }
+.selectator_element.focused { border-color: var(--rm-primary-500) !important; box-shadow: 0 0 0 3px var(--rm-primary-100) !important; }
+.selectator_options { border-radius: var(--rm-radius-lg) !important; box-shadow: var(--rm-shadow-lg) !important; border-color: var(--rm-gray-200) !important; }
+.selectator_option.active { background: var(--rm-primary-50) !important; color: var(--rm-primary-900) !important; }
+
+/* Bootbox confirm */
+.bootbox .modal-footer .btn-primary { background: var(--rm-primary-700); }

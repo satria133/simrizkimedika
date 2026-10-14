@@ -77,3 +77,6 @@ api/
 docker/.env
 mobile-react/node_modules/.package-lock.json
 import_mysql_to_sqlite.py
+# deploy produksi Rizki Medika
+docker/.env.production
+docker/logs/

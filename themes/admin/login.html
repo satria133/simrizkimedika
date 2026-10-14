@@ -1,23 +1,24 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="id">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <title>{$mlite.nama_instansi}</title>
+    <title>Masuk · {$mlite.nama_instansi}</title>
     <link rel="icon" href="{?=url()?}/{$mlite.logo}" type="image/x-icon">
     <link href="{$mlite.path}/assets/css/{$mlite.theme_admin}.min.css?v={$mlite.version}" rel="stylesheet">
     <link href="{?= url(THEMES.'/admin/css/style.css?v='.$mlite.version) ?}" rel="stylesheet">
     <link href="{$mlite.path}/assets/css/font-awesome.css?v={$mlite.version}" rel="stylesheet">
+    <link href="{?= url(THEMES.'/admin/css/rizkimedika-login.css?v='.$mlite.version) ?}" rel="stylesheet">
     <!-- PWA Support -->
     <link rel="manifest" href="{$mlite.path}/manifest.json" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="application-name" content="mLITE" />
-    <meta name="apple-mobile-web-app-title" content="mLITE" />
-    <meta name="theme-color" content="#222" />
-    <meta name="msapplication-navbutton-color" content="#222" />
+    <meta name="application-name" content="{$mlite.nama_instansi}" />
+    <meta name="apple-mobile-web-app-title" content="{$mlite.nama_instansi}" />
+    <meta name="theme-color" content="#213c9f" />
+    <meta name="msapplication-navbutton-color" content="#213c9f" />
     <meta name="apple-mobile-web-app-status-bar-style" content="green-translucent" />
     <meta name="msapplication-starturl" content="{$mlite.path}" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -35,84 +36,81 @@
     <script src="{$mlite.path}/assets/jscripts/jquery.min.js?v={$mlite.version}"></script>
     <script src="{?=url(THEMES.'/admin/js/kalypto.min.js?v='.$mlite.version) ?}"></script>
     <style>
-    body {
-        position: absolute;
-        top: 0; bottom: 0; left: 0; right: 0;
-        height: 100%;
-    }
-    body:before {
-        content: "";
-        position: absolute;
-        background: url('{?=url()?}/{$mlite.wallpaper}');
-        background-size: cover;
-        z-index: -1; /* Keep the background behind the content */
-        height: 20%; width: 20%; /* Using Glen Maddern's trick /via @mente */
-
-        /* don't forget to use the prefixes you need */
-        transform: scale(5);
-        transform-origin: top left;
-        filter: blur(2px);
-    }
+      .rm-login-hero { background-image: linear-gradient(160deg, rgb(40 73 196 / .94), rgb(28 47 102 / .97)), url('{?=url()?}/{$mlite.wallpaper}'); }
     </style>
 </head>
 
-<body>
+<body class="rm-login">
+  <div class="rm-login-grid">
+    <!-- Panel brand: biru papan nama dengan pita merah -->
+    <aside class="rm-login-hero">
+      <div class="rm-ribbon">Balai Pengobatan Umum &amp; Apotek</div>
+      <div class="rm-hero-body">
+        <img src="{?=url()?}/{$mlite.logo}" alt="logo" class="rm-hero-logo">
+        <h1>{$mlite.nama_instansi}</h1>
+        <p class="rm-hero-tag"><span class="rm-dot"></span> Klinik 24 Jam</p>
+        <ul class="rm-hero-points">
+          <li><i class="fa fa-user-plus"></i> Pendaftaran &amp; antrean pasien</li>
+          <li><i class="fa fa-stethoscope"></i> Pemeriksaan poli umum &amp; IGD</li>
+          <li><i class="fa fa-medkit"></i> Apotek, resep &amp; kasir</li>
+        </ul>
+      </div>
+      <div class="rm-hero-foot">Jl. D.I. Panjaitan No. 2B, Pekanbaru &middot; Telp/Fax (0761) 29243</div>
+    </aside>
 
-	<section id="login">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <img src="{?=url()?}/{$mlite.logo}" alt="logo"> <h2>m<span>LITE</span></h2>
-            </div>
-            <div class="panel-body">
-        		<form action="{$_SERVER['REQUEST_URI']}" method="POST">
-                {if: isset($_SESSION['mlite_otp_pending'])}
-                    <h4 class="text-center" style="margin-bottom:20px;">Verifikasi WhatsApp OTP</h4>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="fa fa-key"></i></div>
-                            <input type="text" name="otp_code" class="form-control" placeholder="6-digit Kode OTP" pattern="\d{6}" title="Masukkan 6 digit angka OTP" required autocomplete="off" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" name="verify_otp" class="btn btn-primary btn-block">Verifikasi OTP</button>
-                        <a href="{?=url([ADMIN])?}?cancel_otp=1" class="btn btn-default btn-block" style="margin-top:10px;">Batal (Login Ulang)</a>
-                    </div>
-                {else}
-                  	<div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                            <input type="text" name="username" class="form-control" placeholder="Nama Pengguna" required />
-                        </div>
-                  	</div>
-                  	<div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="fa fa-lock"></i></div>
-                            <input type="password" name="password" class="form-control" placeholder="Password" required />
-                        </div>
-                  	</div>
-                    <div class="form-group">
-                        <label class="remember-me pull-left">
-                            <input type="checkbox" name="remember_me" />
-                            Ingat saya
-                        </label>
-                        <button type="submit" name="login" class="btn btn-primary pull-right">Sign In</button>
-                    </div>
-                    </div>
-                {/if}
-        		</form>
-            </div>
+    <!-- Form: name, action & tombol identik dengan login mLITE -->
+    <main class="rm-login-main">
+      <section id="login" class="rm-login-card">
+        <div class="rm-login-head">
+          <img src="{?=url()?}/{$mlite.logo}" alt="" class="rm-login-mini-logo">
+          <h2>Masuk ke SIMRS</h2>
+          <p>Gunakan akun petugas {$mlite.nama_instansi}.</p>
         </div>
-		{if: $mlite.notify}
-		<div id="notify" class="alert-{$mlite.notify.type} animated shake">{$mlite.notify.text}</div>
-		{/if}
-	</section>
-
-  <footer class="visible-lg visible-md bg-primary" style="padding-bottom:30px;z-index:1000;">
-    <p class="pull-right">
-      Made with <i class="fa fa-heart text-danger"></i> by <a href="https://basoro.id/" target="_blank"><b>drg. F. Basoro</b>.</a>
-      {$mlite.powered}.
-    </p>
-  </footer>
+        <form action="{$_SERVER['REQUEST_URI']}" method="POST">
+        {if: isset($_SESSION['mlite_otp_pending'])}
+            <h4 class="rm-otp-title"><i class="fa fa-whatsapp"></i> Verifikasi WhatsApp OTP</h4>
+            <div class="form-group">
+                <label for="otp_code">Kode OTP</label>
+                <input type="text" id="otp_code" name="otp_code" class="form-control input-lg rm-otp" placeholder="6 digit kode" pattern="\d{6}" title="Masukkan 6 digit angka OTP" required autocomplete="one-time-code" inputmode="numeric" autofocus />
+            </div>
+            <div class="form-group">
+                <button type="submit" name="verify_otp" class="btn btn-primary btn-block btn-lg">Verifikasi OTP</button>
+                <a href="{?=url([ADMIN])?}?cancel_otp=1" class="btn btn-default btn-block" style="margin-top:10px;">Batal (Login Ulang)</a>
+            </div>
+        {else}
+            <div class="form-group">
+                <label for="username">Nama pengguna</label>
+                <div class="rm-field">
+                    <i class="fa fa-user"></i>
+                    <input type="text" id="username" name="username" class="form-control input-lg" placeholder="mis. admin" required autofocus autocomplete="username" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Kata sandi</label>
+                <div class="rm-field">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" id="password" name="password" class="form-control input-lg" placeholder="••••••••" required autocomplete="current-password" />
+                    <button type="button" class="rm-eye" aria-label="Tampilkan kata sandi" onclick="var p=document.getElementById('password');p.type=p.type==='password'?'text':'password';this.firstChild.className=p.type==='password'?'fa fa-eye':'fa fa-eye-slash';"><i class="fa fa-eye"></i></button>
+                </div>
+            </div>
+            <div class="form-group rm-row">
+                <label class="remember-me">
+                    <input type="checkbox" name="remember_me" />
+                    Ingat saya
+                </label>
+            </div>
+            <button type="submit" name="login" class="btn btn-primary btn-block btn-lg">Masuk</button>
+        {/if}
+        </form>
+        {if: $mlite.notify}
+        <div id="notify" class="alert alert-{$mlite.notify.type} rm-login-notify animated shake">{$mlite.notify.text}</div>
+        {/if}
+      </section>
+      <footer class="rm-login-footer">
+        Berbasis mLITE oleh <a href="https://basoro.id/" target="_blank">drg. F. Basoro</a> {$mlite.powered}
+      </footer>
+    </main>
+  </div>
 
   <!-- PWA Support -->
   <script>

@@ -1,0 +1,88 @@
+/* Login Rizki Medika: layout split dengan panel brand (biru papan nama) dan form ala CARE */
+:root {
+  --rm-primary-100: #dce6fd; --rm-primary-200: #bfd1fb; --rm-primary-500: #3a63e0;
+  --rm-primary-700: #213c9f; --rm-primary-800: #1f357f;
+  --rm-accent-500: #e3262f;
+  --rm-gray-50: #f9fafb; --rm-gray-200: #e5e7eb; --rm-gray-300: #d1d5db; --rm-gray-400: #9ca3af;
+  --rm-gray-500: #6b7280; --rm-gray-700: #374151; --rm-gray-950: #030712;
+}
+body.rm-login { margin: 0; padding: 0; min-height: 100vh; background: var(--rm-gray-50); }
+.rm-login-grid { display: grid; grid-template-columns: minmax(380px, 44%) 1fr; min-height: 100vh; }
+
+/* ---- Panel brand ---- */
+.rm-login-hero {
+  position: relative; display: flex; flex-direction: column;
+  background-color: var(--rm-primary-800);
+  background-size: cover; background-position: center;
+  color: #fff; overflow: hidden;
+}
+.rm-ribbon {
+  background: var(--rm-accent-500);
+  text-align: center; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  font-size: 12px; padding: 7px 16px;
+}
+.rm-hero-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 48px 56px; }
+.rm-hero-logo {
+  width: 64px; height: 64px; object-fit: contain; background: #fff;
+  border-radius: 14px; padding: 6px; margin-bottom: 24px;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / .2);
+}
+.rm-hero-body h1 {
+  color: #fff; font-size: 44px; font-weight: 800; letter-spacing: .01em;
+  text-transform: uppercase; margin: 0 0 10px; line-height: 1.05;
+}
+.rm-hero-tag {
+  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+  background: rgb(255 255 255 / .12); border: 1px solid rgb(255 255 255 / .25);
+  border-radius: 999px; padding: 4px 12px; font-weight: 600; font-size: 13px; margin-bottom: 32px;
+}
+.rm-dot { width: 8px; height: 8px; border-radius: 999px; background: #4ade80; box-shadow: 0 0 0 3px rgb(74 222 128 / .3); }
+.rm-hero-points { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.rm-hero-points li { display: flex; align-items: center; gap: 12px; font-size: 15px; color: rgb(255 255 255 / .9); }
+.rm-hero-points .fa {
+  width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
+  background: rgb(255 255 255 / .12); font-size: 14px;
+}
+.rm-hero-foot { padding: 16px 56px 24px; font-size: 12px; color: rgb(255 255 255 / .65); border-top: 1px solid rgb(255 255 255 / .12); }
+
+/* ---- Form ---- */
+.rm-login-main { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 20px; }
+.rm-login #login.rm-login-card {
+  position: static; transform: none; -webkit-transform: none;
+  width: 100%; max-width: 400px;
+  background: #fff; border: 1px solid var(--rm-gray-200); border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1);
+  padding: 32px;
+}
+.rm-login-head { margin-bottom: 24px; }
+.rm-login-mini-logo { display: none; width: 44px; height: 44px; object-fit: contain; margin-bottom: 12px; }
+.rm-login-head h2 { font-size: 22px; font-weight: 700; color: var(--rm-gray-950); margin: 0 0 4px; }
+.rm-login-head p { color: var(--rm-gray-500); margin: 0; font-size: 14px; }
+
+.rm-field { position: relative; }
+.rm-field > .fa { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--rm-gray-400); z-index: 2; }
+.rm-field .form-control { padding-left: 36px; padding-right: 40px; }
+.rm-eye {
+  position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  width: 32px; height: 32px; border: 0; background: transparent; color: var(--rm-gray-500); border-radius: 6px;
+}
+.rm-eye:hover { background: var(--rm-gray-50); color: var(--rm-gray-950); }
+.rm-row { display: flex; align-items: center; justify-content: space-between; }
+.rm-login .remember-me { font-weight: 400; font-size: 14px; color: var(--rm-gray-700); margin: 0; }
+.rm-otp-title { font-size: 16px; font-weight: 600; margin: 0 0 16px; }
+.rm-otp { letter-spacing: .4em; text-align: center; font-weight: 600; }
+
+.rm-login #login #notify.rm-login-notify { display: block; position: static; margin: 16px 0 0; text-align: left; }
+/* style.css lama menjadikan semua <footer> fixed; dinetralkan */
+.rm-login .rm-login-footer { position: static; height: auto; width: auto; margin-top: 20px; font-size: 12px; color: var(--rm-gray-500); text-align: center; }
+.rm-login-footer a { color: var(--rm-gray-700); }
+
+@media (max-width: 860px) {
+  .rm-login-grid { grid-template-columns: 1fr; }
+  .rm-login-hero { min-height: auto; }
+  .rm-hero-body { padding: 24px; }
+  .rm-hero-body h1 { font-size: 28px; }
+  .rm-hero-logo, .rm-hero-points, .rm-hero-foot { display: none; }
+  .rm-hero-tag { margin-bottom: 0; }
+  .rm-login-main { justify-content: flex-start; padding-top: 24px; }
+}

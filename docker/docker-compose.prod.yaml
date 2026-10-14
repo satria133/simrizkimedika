@@ -1,0 +1,60 @@
+# Override PRODUKSI (cloud) untuk Rizki Medika.
+# Pakai bersama file dasar:
+#   docker compose -p mlite -f docker-compose.yaml -f docker-compose.prod.yaml --env-file .env.production up -d
+#
+# Bedanya dengan file dasar:
+# - Caddy sebagai pintu masuk satu-satunya (80/443, HTTPS otomatis Let's Encrypt)
+# - nginx memakai prod.conf, yang memblokir file sensitif (.env, .git, *.sql, docker/, backups/)
+# - DEV_MODE dimatikan, APPURL memakai https
+# - MySQL memakai tuning RAM 4 GB, tidak pernah dipublikasikan ke internet,
+#   dan identitas Rizki Medika diimpor otomatis saat database pertama kali dibuat
+# - semua service restart otomatis
+
+services:
+  caddy:
+    image: caddy:2.8.4-alpine
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - DOMAIN=${DOMAIN}
+      - ACME_EMAIL=${ACME_EMAIL}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - internal
+    depends_on:
+      - nginx
+
+  nginx:
+    restart: always
+    volumes:
+      - ./nginx/prod.conf:/etc/nginx/conf.d/default.conf:ro
+
+  php:
+    restart: always
+    environment:
+      - APPURL=https://${DOMAIN}/uploads
+      - DEVMODE=false
+      - DEV_MODE=false
+      - MULTIAPP=false
+    # composer tanpa paket dev; izin folder tulis cukup untuk www-data, bukan 777
+    command: >-
+      sh -c "composer install --no-dev --optimize-autoloader --no-interaction &&
+      mkdir -p /var/www/html/backups /var/www/html/uploads /var/www/html/systems/data /var/www/html/tmp /var/www/html/admin/tmp &&
+      chown -R www-data:www-data /var/www/html/backups /var/www/html/uploads /var/www/html/systems/data /var/www/html/tmp /var/www/html/admin/tmp &&
+      chmod -R 775 /var/www/html/backups /var/www/html/uploads /var/www/html/systems/data /var/www/html/tmp /var/www/html/admin/tmp &&
+      php-fpm"
+
+  mysql:
+    volumes:
+      - ./my.cnf:/etc/mysql/conf.d/rizkimedika.cnf:ro
+      # dijalankan sekali setelah init.sql (mlite_db.sql), urut abjad
+      - ../docs/rizkimedika/setup.sql:/docker-entrypoint-initdb.d/zz-rizkimedika.sql:ro
+
+volumes:
+  caddy_data:
+  caddy_config:

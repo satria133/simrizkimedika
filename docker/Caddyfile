@@ -1,0 +1,27 @@
+# Reverse proxy HTTPS untuk mLITE Rizki Medika.
+# DOMAIN=simrs.contoh.id   -> sertifikat Let's Encrypt otomatis (DNS harus sudah mengarah ke VPS)
+# DOMAIN=localhost         -> sertifikat internal Caddy (untuk uji lokal)
+{
+	email {$ACME_EMAIL}
+}
+
+{$DOMAIN} {
+	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "geolocation=(self), camera=(self), microphone=()"
+		-Server
+		-X-Powered-By
+	}
+
+	# upload berkas digital/scan; sejalan dengan client_max_body_size nginx
+	request_body {
+		max_size 100MB
+	}
+
+	reverse_proxy nginx:80
+}

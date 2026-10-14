@@ -90,6 +90,7 @@
                             <option value="superhero"{if: $settings.theme_admin == 'superhero'} selected{/if}>Superhero</option>
                             <option value="united"{if: $settings.theme_admin == 'united'} selected{/if}>United</option>
                             <option value="yeti"{if: $settings.theme_admin == 'yeti'} selected{/if}>Yeti</option>
+                            <option value="rizkimedika"{if: $settings.theme_admin == 'rizkimedika'} selected{/if}>Rizki Medika (CARE)</option>
                         </select>
                         <br><br>
                         <img id="theme_admin" src="{?=url()?}/assets/img/{?=isset_or($settings.theme_admin)?}.png" width="400">
@@ -491,7 +492,7 @@
   });
 
   var path='{?=url()?}/assets/img/';
-  var img_array=new Array('','ataaka.png','atilamedika.png','bootstrap.png','cerulean.png','cosmo.png','cyborg.png','darkly.png','flatly.png','journal.png','lumen.png','mlite.png','paper.png','readable.png','sandstone.png','sketchy.png','simplex.png','slate.png','spacelab.png','superhero.png','united.png','yeti.png');
+  var img_array=new Array('','ataaka.png','atilamedika.png','bootstrap.png','cerulean.png','cosmo.png','cyborg.png','darkly.png','flatly.png','journal.png','lumen.png','mlite.png','paper.png','readable.png','sandstone.png','sketchy.png','simplex.png','slate.png','spacelab.png','superhero.png','united.png','yeti.png','rizkimedika.png');
 
   function change_theme(obj,id){
    var i=obj.selectedIndex;
